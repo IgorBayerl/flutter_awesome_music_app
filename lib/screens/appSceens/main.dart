@@ -61,11 +61,15 @@ class _AppScreensState extends State<AppScreens>
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBody: true,
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: _handlePageChanged,
         children: <Widget>[
@@ -88,7 +92,10 @@ class _AppScreensState extends State<AppScreens>
                     ),
                   ),
                   SafeArea(
+                    // maintainBottomViewPadding: true,
                     bottom: false,
+
+                    // top: false,
                     child: TransformerPageView(
                       scrollDirection: Axis.vertical,
                       curve: Curves.easeInBack,
@@ -100,7 +107,12 @@ class _AppScreensState extends State<AppScreens>
                         final subtitle = Texts.subtitles[index];
 
                         return Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                          padding: EdgeInsets.fromLTRB(
+                            0,
+                            0,
+                            0,
+                            MediaQuery.of(context).padding.bottom,
+                          ),
                           child: CardWidget(
                             urlImage: urlImage,
                             title: title,
