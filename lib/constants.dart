@@ -27,3 +27,5 @@ const Duration kLoginAnimationDuration = Duration(milliseconds: 1500);
 
 // Assets
 const String kGoogleLogoPath = 'assets/images/google_logo.png';
+
+

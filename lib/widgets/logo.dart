@@ -7,6 +7,7 @@ class Logo extends StatelessWidget {
   final double size;
 
   const Logo({
+    super.key, 
     required this.color,
     required this.size,
   });
@@ -16,7 +17,7 @@ class Logo extends StatelessWidget {
     return Transform.rotate(
       angle: -pi / 4,
       child: Icon(
-        Icons.format_bold,
+        Icons.music_note_rounded,
         color: color,
         size: size,
       ),

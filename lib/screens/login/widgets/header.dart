@@ -27,7 +27,7 @@ class Header extends StatelessWidget {
             animation: animation,
             additionalOffset: 0.0,
             child: Text(
-              'Welcome to Bubble',
+              'Welcome to awesome Music App',
               style: Theme.of(context)
                   .textTheme
                   .headline5!
@@ -39,7 +39,7 @@ class Header extends StatelessWidget {
             animation: animation,
             additionalOffset: 16.0,
             child: Text(
-              'Est ad dolor aute ex commodo tempor exercitation proident.',
+              'Connect with whathever server you want,.',
               style: Theme.of(context)
                   .textTheme
                   .subtitle1!

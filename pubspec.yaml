@@ -35,6 +35,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   lottie: ^1.4.3
   shared_preferences: ^2.0.15
+  transformer_page_view: ^0.1.6
+  palette_generator: ^0.3.3+2
+  audio_video_progress_bar: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +66,8 @@ flutter:
     - assets/images/google_logo.png
     - assets/next-button-animation.json
     - assets/next-button-animation2.json
+    - assets/images/1msc.jpg
+    - assets/images/2msc.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
