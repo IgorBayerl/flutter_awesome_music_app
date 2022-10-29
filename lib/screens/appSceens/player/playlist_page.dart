@@ -37,8 +37,10 @@ class _Content extends StatelessWidget {
         top: false,
         child: Column(
           children: const [
-            _Header(),
-            _MusicsList(),
+            // _Header(),
+            // _MusicsList(),
+            _MusicsListTop(),
+            _Footer(),
           ],
         ),
       ),
@@ -46,6 +48,110 @@ class _Content extends StatelessWidget {
   }
 }
 
+class _Footer extends StatelessWidget {
+  const _Footer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // height: 180,
+      child: IntrinsicHeight(
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: ShaderMask(
+                blendMode: BlendMode.dstOut,
+                shaderCallback: (Rect rect) {
+                  return const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color.fromARGB(130, 0, 0, 0),
+                      Color.fromARGB(130, 0, 0, 0),
+                    ],
+                    stops: [
+                      0.0,
+                      0.5,
+                      1.0
+                    ], // 10% purple, 80% transparent, 10% purple
+                  ).createShader(rect);
+                },
+                child: const Image(
+                  image: AssetImage('assets/images/1msc.jpg'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom,
+                left: 20,
+                right: 20,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'Playlist Name',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              'Current Music',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(
+                          CupertinoIcons.shuffle,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(
+                          CupertinoIcons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Container(
+                  //   height: 50,
+                  //   color: Colors.purple,
+                  // )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 class _Header extends StatelessWidget {
   const _Header({super.key});
 
@@ -162,6 +268,106 @@ class _Header extends StatelessWidget {
   }
 }
 
+class _MusicsListTop extends StatelessWidget {
+  const _MusicsListTop();
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ShaderMask(
+        blendMode: BlendMode.dstOut,
+        shaderCallback: (Rect rect) {
+          return const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Colors.transparent,
+              Colors.transparent,
+              Color.fromARGB(255, 255, 255, 255),
+            ],
+            stops: [
+              0.0,
+              0.2,
+              0.95,
+              1.0
+            ], // 10% purple, 80% transparent, 10% purple
+          ).createShader(rect);
+        },
+        child: ReorderableListView.builder(
+          reverse: true,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+            bottom: 10,
+          ),
+          onReorder: (int oldIndex, int newIndex) {},
+          itemCount: 20,
+          // scrollController: ScrollController(),
+          itemBuilder: (BuildContext context, int index) {
+            return PlaylistItemTile(
+              key: Key('$index'),
+              index: index,
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class PlaylistItemTile extends StatelessWidget {
+  const PlaylistItemTile({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Slidable(
+      key: Key('$index'),
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (BuildContext) => {},
+            backgroundColor: const Color.fromARGB(48, 39, 39, 39),
+            foregroundColor: Colors.white,
+            icon: Icons.remove_circle,
+            label: 'Inativate',
+          ),
+        ],
+      ),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (BuildContext) => {},
+            backgroundColor: const Color.fromARGB(50, 0, 0, 0),
+            foregroundColor: Colors.white,
+            icon: Icons.settings,
+            // label: 'Save',
+          ),
+          SlidableAction(
+            onPressed: (BuildContext) => {},
+            backgroundColor: const Color.fromARGB(90, 0, 0, 0),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            // label: 'Delete',
+          ),
+        ],
+      ),
+
+      // The child of the Slidable is what the user sees when the
+      // component is not dragged.
+      child: PlayListTile(
+        index: index,
+      ),
+    );
+  }
+}
+
 class _MusicsList extends StatelessWidget {
   const _MusicsList();
 
@@ -269,63 +475,86 @@ class _MusicsList extends StatelessWidget {
 class PlayListTile extends StatelessWidget {
   const PlayListTile({
     super.key,
-    required int index,
+    required this.index,
   });
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              child: Image(
-                image: AssetImage('assets/images/1msc.jpg'),
-                height: 50,
-                width: 50,
-              ),
+    const shadow = Shadow(
+      blurRadius: 10.0,
+      color: Color.fromARGB(136, 0, 0, 0),
+    );
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            '$index',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Music Name',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: Image(
+              image: AssetImage('assets/images/1msc.jpg'),
+              height: 50,
+              width: 50,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Music Name',
+                      style: TextStyle(
+                        color: index != 5
+                            ? Colors.white
+                            : const Color.fromARGB(255, 171, 148, 255),
+                        fontWeight: FontWeight.bold,
+                        shadows: const [shadow],
+                        fontSize: 15,
                       ),
-                      Text(
-                        'SAKJDLALSKDJALSDK',
-                        style: TextStyle(
-                          color: Color.fromARGB(157, 255, 255, 255),
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    '3:45',
-                    style: TextStyle(
-                      color: Colors.white,
                     ),
+                    Text(
+                      'SAKJDLALSKDJALSDK',
+                      style: TextStyle(
+                        color: index != 5
+                            ? const Color.fromARGB(157, 255, 255, 255)
+                            : const Color.fromARGB(255, 183, 163, 255),
+                        shadows: const [shadow],
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  '3:45',
+                  style: TextStyle(
+                    color: index != 5
+                        ? Colors.white
+                        : const Color.fromARGB(255, 171, 148, 255),
+                    shadows: const [shadow],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
