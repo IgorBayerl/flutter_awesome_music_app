@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/main.dart';
 
 import 'screens/onboarding/onboarding.dart';
 
@@ -14,7 +15,8 @@ class App extends StatelessWidget {
         builder: (BuildContext context) {
           final screenHeight = MediaQuery.of(context).size.height;
 
-          return Onboarding(screenHeight: screenHeight);
+          // return Onboarding(screenHeight: screenHeight);
+          return AppScreens();
         },
       ),
     );

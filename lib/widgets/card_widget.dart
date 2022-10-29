@@ -1,6 +1,9 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_music_app/constants.dart';
+import 'package:touchable_opacity/touchable_opacity.dart';
+// import 'package:flutter_awesome_music_app/widgets/touchable_opacity.dart';
 
 class CardWidget extends StatefulWidget {
   final String urlImage;
@@ -19,34 +22,14 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
-  void _handlePlaylistButtonClick() {
-    showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
-        ),
-      ),
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: 200,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                color: Colors.red,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 11.0,
+          vertical: 10,
+        ),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -56,51 +39,153 @@ class _CardWidgetState extends State<CardWidget> {
                 image: AssetImage(widget.urlImage),
                 fit: BoxFit.cover,
                 colorFilter:
-                    const ColorFilter.mode(Colors.black45, BlendMode.darken)),
+                  const ColorFilter.mode(Colors.black45, BlendMode.darken),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Spacer(),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                widget.subtitle,
-                style: const TextStyle(color: Colors.white, fontSize: 18),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 18, 10, 0),
+              Expanded(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 30,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // const Spacer(),
+                        Text(
+                          widget.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Text(
+                              widget.subtitle,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
+                            ),
+                            // const SizedBox(
+                            //   width: 5,
+                            // ),
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //     color: const Color.fromARGB(52, 255, 255, 255),
+                            //     borderRadius: BorderRadius.circular(10),
+                            //   ),
+                            //   child: const Padding(
+                            //     padding: EdgeInsets.symmetric(
+                            //       horizontal: 10,
+                            //       vertical: 3,
+                            //     ),
+                            //     child: Text(
+                            //       'follow',
+                            //       style: TextStyle(
+                            //         color: Colors.white,
+                            //         fontSize: 12,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // )
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 20),
-                    const Icon(
-                      Icons.download,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.featured_play_list_rounded,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      onPressed: _handlePlaylistButtonClick,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: TouchableOpacity(
+                            onTap: () {},
+                            child: const CircleAvatar(
+                              radius: 25,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: TouchableOpacity(
+                            onTap: () {},
+                            child: const CircleAvatar(
+                              radius: 25,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.favorite_border,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 10,
+                          ),
+                          child: TouchableOpacity(
+                            onTap: () {},
+                            child: const CircleAvatar(
+                              radius: 25,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                CupertinoIcons.share,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
               ),
+              
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(10, 18, 10, 0),
+              //   child: Row(
+              //     children: [
+              //       const Icon(
+              //         Icons.favorite,
+              //         color: Colors.white,
+              //         size: 30,
+              //       ),
+              //       const SizedBox(width: 20),
+              //       const Icon(
+              //         Icons.download,
+              //         color: Colors.white,
+              //         size: 30,
+              //       ),
+              //       const Spacer(),
+              //       TouchableOpacity(
+              //         onTap: _handlePlaylistButtonClick,
+              //         child: const Icon(
+              //           Icons.featured_play_list_rounded,
+              //           color: Colors.white,
+              //           size: 30,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ProgressBar(
@@ -116,9 +201,9 @@ class _CardWidgetState extends State<CardWidget> {
                   baseBarColor: Colors.white.withOpacity(0.24),
                   bufferedBarColor: Colors.white.withOpacity(0.24),
                   thumbColor: Colors.white,
-                  barHeight: 30.0,
-                  thumbRadius: 15.0,
-                  thumbGlowRadius: 30,
+                  barHeight: 6.0,
+                  thumbRadius: 6.0,
+                  thumbGlowRadius: 6,
                   onSeek: (duration) {
                     print(duration);
                   },

@@ -1,15 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_awesome_music_app/constants.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
 
-import '../../texts.dart';
-import '../../widgets/card_widget.dart';
-import 'player/transformers/my_transformer.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/player/player_page.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/player/playlist_page.dart';
+
 
 class AppScreens extends StatefulWidget {
   const AppScreens({super.key});
@@ -21,26 +16,16 @@ class AppScreens extends StatefulWidget {
 class _AppScreensState extends State<AppScreens>
     with SingleTickerProviderStateMixin {
   final _pageController = PageController();
-  final _musicPageController = PageController();
 
-  /// animation controller
-  late final AnimationController _bgAnimationController;
   late Animation<Color> bgAnimation;
 
-  static const _bgImg = AssetImage('assets/images/1msc.jpg');
-
   int _selectedPageIndex = 0;
-  int _selectedMusicPageIndex = 0;
 
   get placeholder => null;
-
+  
   @override
   void initState() {
     super.initState();
-    _bgAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
   }
 
   void _handleOnCLickBottomNav(int index) {
@@ -61,77 +46,48 @@ class _AppScreensState extends State<AppScreens>
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       extendBody: true,
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: _handlePageChanged,
+      backgroundColor: Colors.black,
+      body: Stack(
         children: <Widget>[
-          Scaffold(
-            body: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.blueGrey[900],
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/1msc.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: Container(
-                      color: Colors.black54,
-                    ),
-                  ),
-                  SafeArea(
-                    // maintainBottomViewPadding: true,
-                    bottom: false,
-
-                    // top: false,
-                    child: TransformerPageView(
-                      scrollDirection: Axis.vertical,
-                      curve: Curves.easeInBack,
-                      transformer: MyTransformer(), // transformers[5],
-                      itemCount: Texts.urlImages.length,
-                      itemBuilder: (context, index) {
-                        final urlImage = Texts.urlImages[index];
-                        final title = Texts.titles[index];
-                        final subtitle = Texts.subtitles[index];
-
-                        return Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            0,
-                            0,
-                            0,
-                            MediaQuery.of(context).padding.bottom,
-                          ),
-                          child: CardWidget(
-                            urlImage: urlImage,
-                            title: title,
-                            subtitle: subtitle,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           Container(
-            color: const Color.fromARGB(255, 207, 132, 34),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment(0.8, 1),
+              colors: <Color>[
+                Color(0xffffb56b),
+                Color(0xfff39060),
+                Color(0xffe16b5c),
+                Color(0xffca485c),
+                Color(0xffac255e),
+                Color(0xff870160),
+                Color(0xff5b0060),
+                Color(0xff1f005c),
+              ], // Gradient from https://learnui.design/tools/gradient-generator.html
+              tileMode: TileMode.mirror,
+            )),
           ),
-          Container(
-            color: const Color.fromARGB(255, 27, 24, 223),
+          PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            onPageChanged: _handlePageChanged,
+            children: <Widget>[
+              const PlaylistPage(),
+              const PlayerPage(),
+              Container(
+                color: const Color.fromARGB(255, 207, 132, 34),
+              ),
+              Container(
+                color: const Color.fromARGB(255, 27, 24, 223),
+              ),
+            ],
           ),
+          
         ],
       ),
       bottomNavigationBar: Container(
@@ -148,7 +104,11 @@ class _AppScreensState extends State<AppScreens>
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.discord),
+              icon: Icon(Icons.featured_play_list_rounded),
+              label: 'Playlist',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.play_arrow_solid),
               label: 'Player',
             ),
             BottomNavigationBarItem(
@@ -161,13 +121,17 @@ class _AppScreensState extends State<AppScreens>
             ),
           ],
           currentIndex: _selectedPageIndex,
-          selectedItemColor: const Color.fromARGB(255, 233, 233, 233),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: const Color.fromARGB(172, 203, 192, 248),
           unselectedItemColor: const Color.fromARGB(255, 214, 214, 214),
           backgroundColor: Colors.transparent,
           onTap: _handleOnCLickBottomNav,
+          type: BottomNavigationBarType.fixed,
           elevation: 0,
         ),
       ),
     );
   }
 }
+

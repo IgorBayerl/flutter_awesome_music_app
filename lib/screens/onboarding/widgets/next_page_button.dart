@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:touchable_opacity/touchable_opacity.dart';
 
 import '../../../constants.dart';
 
@@ -25,12 +26,8 @@ class _NextPageButtonState extends State<NextPageButton>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      padding: const EdgeInsets.all(0),
-      elevation: 0.0,
-      shape: const CircleBorder(),
-      // fillColor: Colors.red,
-      onPressed: widget.onPressed,
+    return TouchableOpacity(
+      onTap: widget.onPressed,
       child: Lottie.asset(
         'assets/next-button-animation.json',
         controller: widget.animationController,
