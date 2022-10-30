@@ -100,14 +100,19 @@ class _CardWidgetState extends State<CardWidget> {
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      
                       children: [
                         // const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
                           ),
-                          child: TouchableOpacity(
-                            onTap: () {},
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            onPressed: () {},
                             child: const CircleAvatar(
                               radius: 25,
                               backgroundColor: Colors.white,
@@ -123,16 +128,15 @@ class _CardWidgetState extends State<CardWidget> {
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
                           ),
-                          child: TouchableOpacity(
-                            onTap: () {},
-                            child: const CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.favorite_border,
-                                color: Colors.black,
-                                size: 30,
-                              ),
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            onPressed: () {},
+                            child: const Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                              size: 30,
                             ),
                           ),
                         ),
@@ -140,16 +144,15 @@ class _CardWidgetState extends State<CardWidget> {
                           padding: const EdgeInsets.only(
                             top: 10,
                           ),
-                          child: TouchableOpacity(
-                            onTap: () {},
-                            child: const CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                CupertinoIcons.share,
-                                color: Colors.black,
-                                size: 30,
-                              ),
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            onPressed: () {},
+                            child: const Icon(
+                              CupertinoIcons.share,
+                              color: Colors.white,
+                              size: 30,
                             ),
                           ),
                         ),

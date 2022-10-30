@@ -36,11 +36,11 @@ class _Content extends StatelessWidget {
         bottom: false,
         top: false,
         child: Column(
-          children: const [
+          children: [
             // _Header(),
             // _MusicsList(),
             _MusicsListTop(),
-            _Footer(),
+            const _Footer(),
           ],
         ),
       ),
@@ -121,20 +121,38 @@ class _Footer extends StatelessWidget {
                   ),
                   const Spacer(),
                   Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(
-                          CupertinoIcons.shuffle,
-                          color: Colors.white,
+                    children: [
+                      MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minWidth: 0,
+                        height: 0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            CupertinoIcons.shuffle,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(
-                          CupertinoIcons.search,
-                          color: Colors.white,
+                      const Spacer(),
+                      MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minWidth: 0,
+                        height: 0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            CupertinoIcons.search,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -152,6 +170,7 @@ class _Footer extends StatelessWidget {
     );
   }
 }
+
 class _Header extends StatelessWidget {
   const _Header({super.key});
 
@@ -269,7 +288,11 @@ class _Header extends StatelessWidget {
 }
 
 class _MusicsListTop extends StatelessWidget {
-  const _MusicsListTop();
+  _MusicsListTop();
+
+  final _scrollController = ScrollController(
+    initialScrollOffset: 40,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -295,11 +318,19 @@ class _MusicsListTop extends StatelessWidget {
           ).createShader(rect);
         },
         child: ReorderableListView.builder(
+          scrollController: _scrollController,
           reverse: true,
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
             bottom: 10,
           ),
+          proxyDecorator:
+              (Widget child, int index, Animation<double> animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
           onReorder: (int oldIndex, int newIndex) {},
           itemCount: 20,
           // scrollController: ScrollController(),
@@ -339,6 +370,7 @@ class PlaylistItemTile extends StatelessWidget {
           ),
         ],
       ),
+
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
@@ -369,7 +401,11 @@ class PlaylistItemTile extends StatelessWidget {
 }
 
 class _MusicsList extends StatelessWidget {
-  const _MusicsList();
+  _MusicsList();
+
+  final _scrollController = ScrollController(
+    initialScrollOffset: -40,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -395,6 +431,7 @@ class _MusicsList extends StatelessWidget {
           ).createShader(rect);
         },
         child: ReorderableListView.builder(
+          scrollController: _scrollController,
           padding: EdgeInsets.only(
             top: 10,
             bottom: MediaQuery.of(context).padding.bottom,
@@ -486,75 +523,79 @@ class PlayListTile extends StatelessWidget {
       blurRadius: 10.0,
       color: Color.fromARGB(136, 0, 0, 0),
     );
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
-          child: Text(
-            '$index',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
+    return MaterialButton(
+      onPressed: () {},
+      padding: EdgeInsets.zero,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Text(
+              '$index',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
             ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: Image(
-              image: AssetImage('assets/images/1msc.jpg'),
-              height: 50,
-              width: 50,
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              child: Image(
+                image: AssetImage('assets/images/1msc.jpg'),
+                height: 50,
+                width: 50,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Music Name',
-                      style: TextStyle(
-                        color: index != 5
-                            ? Colors.white
-                            : const Color.fromARGB(255, 171, 148, 255),
-                        fontWeight: FontWeight.bold,
-                        shadows: const [shadow],
-                        fontSize: 15,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Music Name',
+                        style: TextStyle(
+                          color: index != 5
+                              ? Colors.white
+                              : const Color.fromARGB(255, 171, 148, 255),
+                          fontWeight: FontWeight.bold,
+                          shadows: const [shadow],
+                          fontSize: 15,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'SAKJDLALSKDJALSDK',
-                      style: TextStyle(
-                        color: index != 5
-                            ? const Color.fromARGB(157, 255, 255, 255)
-                            : const Color.fromARGB(255, 183, 163, 255),
-                        shadows: const [shadow],
-                        fontSize: 13,
+                      Text(
+                        'SAKJDLALSKDJALSDK',
+                        style: TextStyle(
+                          color: index != 5
+                              ? const Color.fromARGB(157, 255, 255, 255)
+                              : const Color.fromARGB(255, 183, 163, 255),
+                          shadows: const [shadow],
+                          fontSize: 13,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Text(
-                  '3:45',
-                  style: TextStyle(
-                    color: index != 5
-                        ? Colors.white
-                        : const Color.fromARGB(255, 171, 148, 255),
-                    shadows: const [shadow],
+                    ],
                   ),
-                ),
-              ],
+                  Text(
+                    '3:45',
+                    style: TextStyle(
+                      color: index != 5
+                          ? Colors.white
+                          : const Color.fromARGB(255, 171, 148, 255),
+                      shadows: const [shadow],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

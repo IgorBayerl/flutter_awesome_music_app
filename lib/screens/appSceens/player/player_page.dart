@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_music_app/screens/appSceens/player/transformers/my_transformer.dart';
 import 'package:flutter_awesome_music_app/texts.dart';
@@ -21,40 +19,89 @@ class PlayerPage extends StatelessWidget {
   }
 }
 
-class _Content extends StatelessWidget {
+class _Content extends StatefulWidget {
   const _Content({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> with TickerProviderStateMixin {
+  late bool isPlaying = false;
+  late AnimationController pauseAnimationController = AnimationController(
+    duration: const Duration(milliseconds: 50),
+    vsync: this,
+  );
+  late Animation<double> pauseAnimation =
+      Tween<double>(begin: 0, end: 1).animate(pauseAnimationController);
+
+  @override
   Widget build(BuildContext context) {
+
+    void handlePauseUnpause() {
+      setState(() {
+        isPlaying = !isPlaying;
+      });
+
+      if (isPlaying) {
+        pauseAnimationController.forward();
+      } else {
+        pauseAnimationController.reverse();
+      }
+    }
+
+    
     return SafeArea(
       bottom: false,
-      child: Column(
+      child: Stack(
         children: [
-          const _Header(),
-          Expanded(
-            child: TransformerPageView(
-              scrollDirection: Axis.vertical,
-              curve: Curves.easeInBack,
-              transformer: MyTransformer(),
-              itemCount: Texts.urlImages.length,
-              itemBuilder: (context, index) {
-                final urlImage = Texts.urlImages[index];
-                final title = Texts.titles[index];
-                final subtitle = Texts.subtitles[index];
+          Column(
+            children: [
+              const _Header(),
+              Expanded(
+                child: TransformerPageView(
+                  scrollDirection: Axis.vertical,
+                  curve: Curves.easeInBack,
+                  transformer: MyTransformer(),
+                  itemCount: Texts.urlImages.length,
+                  itemBuilder: (context, index) {
+                    final urlImage = Texts.urlImages[index];
+                    final title = Texts.titles[index];
+                    final subtitle = Texts.subtitles[index];
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: CardWidget(
-                    urlImage: urlImage,
-                    title: title,
-                    subtitle: subtitle,
-                  ),
-                );
-              },
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom,
+                      ),
+                      child: GestureDetector(
+                        onTap: handlePauseUnpause,
+                        // onDoubleTap: handlePauseUnpause,
+                        child: CardWidget(
+                          urlImage: urlImage,
+                          title: title,
+                          subtitle: subtitle,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          IgnorePointer(
+            child: Container(
+              alignment: Alignment.center,
+              child: FadeTransition(
+                opacity: pauseAnimation,
+                child: const Icon(
+                  Icons.play_arrow_rounded,
+                  color: Color.fromARGB(94, 255, 255, 255),
+                  size: 200,
+                ),
+              ),
+              
             ),
           ),
         ],

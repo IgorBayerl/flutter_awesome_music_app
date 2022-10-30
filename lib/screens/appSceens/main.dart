@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_awesome_music_app/screens/appSceens/player/player_page.dart';
-import 'package:flutter_awesome_music_app/screens/appSceens/player/playlist_page.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/playlist/playlist_page.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/search/search_page.dart';
 
 
 class AppScreens extends StatefulWidget {
@@ -79,9 +80,7 @@ class _AppScreensState extends State<AppScreens>
             children: <Widget>[
               const PlaylistPage(),
               const PlayerPage(),
-              Container(
-                color: const Color.fromARGB(255, 207, 132, 34),
-              ),
+              const SearchPage(),
               Container(
                 color: const Color.fromARGB(255, 27, 24, 223),
               ),
