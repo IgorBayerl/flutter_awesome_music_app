@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_music_app/screens/appSceens/player/transformers/my_transformer.dart';
+import 'package:flutter_awesome_music_app/services/global_data.dart';
 import 'package:flutter_awesome_music_app/texts.dart';
 import 'package:flutter_awesome_music_app/widgets/card_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get_it/get_it.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:transformer_page_view/transformer_page_view.dart';
 
@@ -40,7 +42,7 @@ class _Content extends StatelessWidget {
             // _Header(),
             // _MusicsList(),
             _MusicsListTop(),
-            const _Footer(),
+            _Footer(),
           ],
         ),
       ),
@@ -49,7 +51,9 @@ class _Content extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({super.key});
+  _Footer({super.key});
+
+  final GlobalData globalData = GetIt.I.get<GlobalData>();
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +102,16 @@ class _Footer extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
-                              'Playlist Name',
-                              style: TextStyle(
+                              globalData.data["name"]!,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Current Music',
                               style: TextStyle(
                                 color: Colors.white,

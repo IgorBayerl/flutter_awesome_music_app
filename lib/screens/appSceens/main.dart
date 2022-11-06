@@ -1,11 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_awesome_music_app/screens/appSceens/player/player_page.dart';
 import 'package:flutter_awesome_music_app/screens/appSceens/playlist/playlist_page.dart';
+import 'package:flutter_awesome_music_app/screens/appSceens/profile/profile_page.dart';
 import 'package:flutter_awesome_music_app/screens/appSceens/search/search_page.dart';
-
+import 'package:flutter_awesome_music_app/services/global_data.dart';
+import 'package:get_it/get_it.dart';
 
 class AppScreens extends StatefulWidget {
   const AppScreens({super.key});
@@ -16,17 +17,25 @@ class AppScreens extends StatefulWidget {
 
 class _AppScreensState extends State<AppScreens>
     with SingleTickerProviderStateMixin {
-  final _pageController = PageController();
+  final _pageController = PageController(
+    initialPage: 1,
+  );
 
   late Animation<Color> bgAnimation;
 
-  int _selectedPageIndex = 0;
+  int _selectedPageIndex = 1;
 
-  get placeholder => null;
-  
+  final GlobalData globalData = GetIt.I.get<GlobalData>();
   @override
   void initState() {
     super.initState();
+    _initGlobalData();
+  }
+
+  Future<void> _initGlobalData() async {
+    globalData.loadGlobalData().then((resData) {
+      setState(() => globalData.data = resData);
+    });
   }
 
   void _handleOnCLickBottomNav(int index) {
@@ -49,7 +58,6 @@ class _AppScreensState extends State<AppScreens>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.black,
@@ -77,16 +85,13 @@ class _AppScreensState extends State<AppScreens>
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             onPageChanged: _handlePageChanged,
-            children: <Widget>[
-              const PlaylistPage(),
-              const PlayerPage(),
-              const SearchPage(),
-              Container(
-                color: const Color.fromARGB(255, 27, 24, 223),
-              ),
+            children: const <Widget>[
+              PlaylistPage(),
+              PlayerPage(),
+              SearchPage(),
+              ProfilePage(),
             ],
           ),
-          
         ],
       ),
       bottomNavigationBar: Container(
@@ -133,4 +138,3 @@ class _AppScreensState extends State<AppScreens>
     );
   }
 }
-
