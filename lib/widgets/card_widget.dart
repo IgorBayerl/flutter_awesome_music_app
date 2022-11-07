@@ -49,69 +49,59 @@ class _CardWidgetState extends State<CardWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // const Spacer(),
-                        Text(
-                          widget.title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Text(
-                              widget.subtitle,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // const Spacer(),
+                          Text(
+                            widget.title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
                             ),
-                            // const SizedBox(
-                            //   width: 5,
-                            // ),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //     color: const Color.fromARGB(52, 255, 255, 255),
-                            //     borderRadius: BorderRadius.circular(10),
-                            //   ),
-                            //   child: const Padding(
-                            //     padding: EdgeInsets.symmetric(
-                            //       horizontal: 10,
-                            //       vertical: 3,
-                            //     ),
-                            //     child: Text(
-                            //       'follow',
-                            //       style: TextStyle(
-                            //         color: Colors.white,
-                            //         fontSize: 12,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // )
-                          ],
-                        ),
-                      ],
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.subtitle,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+
                       children: [
                         // const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 10,
+                            vertical: 15,
                           ),
                           child: MaterialButton(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
+                            padding: const EdgeInsets.all(0),
+                            minWidth: 0,
                             onPressed: () {},
                             child: const CircleAvatar(
                               radius: 25,
@@ -126,12 +116,14 @@ class _CardWidgetState extends State<CardWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 10,
+                            vertical: 5,
                           ),
                           child: MaterialButton(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
+                            padding: const EdgeInsets.all(15),
+                            minWidth: 0,
                             onPressed: () {},
                             child: const Icon(
                               Icons.favorite_border,
@@ -140,20 +132,17 @@ class _CardWidgetState extends State<CardWidget> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
+                        MaterialButton(
+                          minWidth: 0,
+                          padding: const EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
                           ),
-                          child: MaterialButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            onPressed: () {},
-                            child: const Icon(
-                              CupertinoIcons.share,
-                              color: Colors.white,
-                              size: 30,
-                            ),
+                          onPressed: () {},
+                          child: const Icon(
+                            CupertinoIcons.share,
+                            color: Colors.white,
+                            size: 30,
                           ),
                         ),
                       ],
@@ -162,33 +151,6 @@ class _CardWidgetState extends State<CardWidget> {
                 ),
               ),
               
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(10, 18, 10, 0),
-              //   child: Row(
-              //     children: [
-              //       const Icon(
-              //         Icons.favorite,
-              //         color: Colors.white,
-              //         size: 30,
-              //       ),
-              //       const SizedBox(width: 20),
-              //       const Icon(
-              //         Icons.download,
-              //         color: Colors.white,
-              //         size: 30,
-              //       ),
-              //       const Spacer(),
-              //       TouchableOpacity(
-              //         onTap: _handlePlaylistButtonClick,
-              //         child: const Icon(
-              //           Icons.featured_play_list_rounded,
-              //           color: Colors.white,
-              //           size: 30,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ProgressBar(

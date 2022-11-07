@@ -14,10 +14,10 @@ class Texts {
     'Music5'
   ];
   static const List<String> subtitles = [
-    'Lorem ipsum dolor sit amet.',
-    'Lorem ipsum dolor sit amet.',
-    'Lorem ipsum dolor sit amet.',
-    'Lorem ipsum dolor sit amet.',
-    'Lorem ipsum dolor sit amet.',
+    'Lorem 10 ipsum dolor sit amet, consectetur adipiscing elit. ',
+    'Lorem 10 ipsum dolor sit amet, consectetur adipiscing elit. ',
+    'Lorem 10 ipsum dolor sit amet, consectetur adipiscing elit. ',
+    'Lorem 10 ipsum dolor sit amet, consectetur adipiscing elit. ',
+    'Lorem 10 ipsum dolor sit amet, consectetur adipiscing elit. ',
   ];
 }
